@@ -4,7 +4,7 @@ import Login from "./components/accounts/Login";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ marginTop: 64 }}>
       <Login />
     </div>
   );
