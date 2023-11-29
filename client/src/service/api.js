@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_NOTIFICATION_MESSAGES } from "../constants/config";
+import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from "../constants/config";
 
 const API_URL = "http://localhost:8000";
 
@@ -67,7 +67,7 @@ const processError = (error) => {
     return {
       isError: true,
       msg: API_NOTIFICATION_MESSAGES.requestFailure,
-      code: error.response.status,
+      code: "",
     };
   } else {
     // Something happened in Setting up request that triggers an  error
@@ -79,3 +79,32 @@ const processError = (error) => {
     };
   }
 };
+
+const API = {};
+for (const [key, value] of Object.entries(SERVICE_URLS)) {
+  API[key] = (body, showUploadProgress, showDownloadProgress) =>
+    axiosInstance({
+      method: value.method,
+      url: value.url,
+      data: body,
+      responseType: value.responseType,
+      onUploadProgress: function (progressEvent) {
+        if (showUploadProgress) {
+          let percentageCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          showUploadProgress(percentageCompleted);
+        }
+      },
+      onDownloadProgress: function (progressEvent) {
+        if (showDownloadProgress) {
+          let percentageCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          showDownloadProgress(percentageCompleted);
+        }
+      },
+    });
+}
+
+export { API };

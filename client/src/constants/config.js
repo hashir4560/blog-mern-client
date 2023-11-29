@@ -24,3 +24,9 @@ export const API_NOTIFICATION_MESSAGES = {
       "Unable to Connect With the Server. Please Check Internet Connectivity and Try again later",
   },
 };
+
+//API SERVICE CALL
+
+export const SERVICE_URLS = {
+  userSignup: { url: "/signup", method: POST },
+};
