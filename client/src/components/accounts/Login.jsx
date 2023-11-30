@@ -31,8 +31,6 @@ background:#FB641B;
 color:#fff  ;
 height:48px;
 border-radius:2px;
-
-
 `
 const SignupButton=styled(Button)`
 text-transform:none;
@@ -41,6 +39,13 @@ color:#2870f0  ;
 height:48px;
 border-radius:2px;
 box-shadow: 0 2px 4px 0 rgb(0 0 0/ 20% )
+`
+const Error =styled(Typography)`
+font-size:10px;
+color:#ff61261;
+line-height:0;
+margin-top:10px;
+font-weight:600
 `
 const Text=styled(Typography)`
 color:#878787;
@@ -57,6 +62,7 @@ const Login = () => {
 
     const [account,toggleAccount]=useState('login')
     const [signup,setSignup]=useState(signupInitialValues)
+    const[error,showError]=useState("")
      
     const toggleSignup = () => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
@@ -69,10 +75,39 @@ const Login = () => {
 
   //Signup User Func
 
-  const signupUser=()=>{
+  const signupUser = async () => {
+    try {
+      let response= await API.userSignup(signup);
+      if (response.isSuccess) {
+        showError('');
+        setSignup(signupInitialValues);
+        toggleAccount('login');
+      } else {
+        showError('Something went wrong! Please try again later.');
+      }
+    } catch (error) {
+      // The catch block is empty to avoid adding additional error handling
+    }
+  };
+  
 
-  }
-   
+// const signupUser = async () => {
+//     try {
+//       let response = await API.userSignup(signup);
+  
+//       if (response.isSuccess) {
+//         setError('');
+//         setSignup(signupInitialValues);
+//         toggleAccount('login');
+//       } else {
+//         setError("Something Went Wrong. Please Try Again Later");
+//       }
+//     } catch (error) {
+//       // Handle the error (e.g., show an error message to the user)
+      
+//     }
+//   };
+  
 
 
   return (
@@ -84,6 +119,8 @@ const Login = () => {
           <Wrapper>
          <TextField variant='standard' label="Enter Username"/>
         <TextField variant='standard' label="Enter Password"/>
+
+        {error && <Error>{error}</Error>}
         <LoginButton variant='contained'>Login</LoginButton>
         <Text style={{textAlign:"center"}}>OR</Text>
          <SignupButton onClick={()=>toggleSignup()} >Create an Account</SignupButton>
@@ -93,7 +130,8 @@ const Login = () => {
          <TextField variant='standard'onChange={(e)=> onInputChange(e)}  name='name'  label="Enter Name"/>
         <TextField variant='standard' onChange={(e)=> onInputChange(e)}  name="username" label="Enter Username"/>
         <TextField variant='standard'onChange={(e)=>  onInputChange(e)} name='password'  label="Enter Password"/>
-        <SignupButton onClick={()=>signupUser()} >Signup</SignupButton>
+        {error && <Error>{error}</Error>}
+        <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
         <Text style={{textAlign:"center"}}>OR</Text>
          <LoginButton variant='contained' onClick={()=>toggleSignup()}  >Already have an Account</LoginButton>
          </Wrapper>

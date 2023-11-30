@@ -55,18 +55,17 @@ const processResponse = (response) => {
 const processError = (error) => {
   if (error.response) {
     //Request made and server respnded with a status other that falls out of range of 2.x.x
-    console.log("ERROR IN RESPONSE:", error.toJSON());
-    return {
-      isError: true,
-      msg: API_NOTIFICATION_MESSAGES.responseFailure,
-      code: error.response.status,
-    };
+    console.log("ERROR IN RESPONSE:", {
+      response: error.response,
+      request: error.request,
+      toJSON: error.toJSON(),
+    });
   } else if (error.request) {
     // Request made but there is no response  came
     console.log("ERROR IN REQUEST:", error.toJSON());
     return {
       isError: true,
-      msg: API_NOTIFICATION_MESSAGES.requestFailure,
+      msg: API_NOTIFICATION_MESSAGES.responseFailure.message,
       code: "",
     };
   } else {
