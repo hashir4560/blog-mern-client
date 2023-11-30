@@ -84,31 +84,12 @@ const Login = () => {
         toggleAccount('login');
       } else {
         showError('Something went wrong! Please try again later.');
-      }
+      } 
     } catch (error) {
       // The catch block is empty to avoid adding additional error handling
     }
   };
   
-
-// const signupUser = async () => {
-//     try {
-//       let response = await API.userSignup(signup);
-  
-//       if (response.isSuccess) {
-//         setError('');
-//         setSignup(signupInitialValues);
-//         toggleAccount('login');
-//       } else {
-//         setError("Something Went Wrong. Please Try Again Later");
-//       }
-//     } catch (error) {
-//       // Handle the error (e.g., show an error message to the user)
-      
-//     }
-//   };
-  
-
 
   return (
    <Component>

@@ -10,5 +10,4 @@ const Connection = async (username, password) => {
     console.log("Error While Connecting to the Database", error);
   }
 };
-
 export default Connection;
