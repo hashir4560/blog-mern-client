@@ -50,7 +50,13 @@ font-weight:600
 const Text=styled(Typography)`
 color:#878787;
 font-size:16px;
+
 `
+const loginInitialValues={
+  username:"",
+  password:""
+}
+
 const signupInitialValues={
     name:'',
     username:'',
@@ -61,6 +67,7 @@ const Login = () => {
     const imageUrl ='https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png';
 
     const [account,toggleAccount]=useState('login')
+    const[login,setLogin]=useState(loginInitialValues)
     const [signup,setSignup]=useState(signupInitialValues)
     const[error,showError]=useState("")
      
@@ -90,6 +97,25 @@ const Login = () => {
     }
   };
   
+const onValueChange=(e)=>{
+  setLogin({...login,[e.target.name]:e.target.value})
+
+}
+
+const loginUser=async()=>{
+  try{
+  let response = await API.userLogin(login)
+  if(response.isSuccces){
+    showError('')
+  }else{
+    showError("Something Went Wrong ! Please Try again Later s")
+  }
+}catch(error){
+
+}
+
+}
+
 
   return (
    <Component>
@@ -98,11 +124,11 @@ const Login = () => {
          { 
          account === "login" ? 
           <Wrapper>
-         <TextField variant='standard' label="Enter Username"/>
-        <TextField variant='standard' label="Enter Password"/>
+         <TextField variant='standard' value={login.username} onChange={(e)=>onValueChange(e)} name="username" label="Enter Username"/>
+        <TextField variant='standard' value={login.password}onChange={(e)=>onValueChange(e)} name='password' label="Enter Password"/>
 
         {error && <Error>{error}</Error>}
-        <LoginButton variant='contained'>Login</LoginButton>
+        <LoginButton variant='contained' onClick={()=>loginUser()}>Login</LoginButton>
         <Text style={{textAlign:"center"}}>OR</Text>
          <SignupButton onClick={()=>toggleSignup()} >Create an Account</SignupButton>
          </Wrapper> 
