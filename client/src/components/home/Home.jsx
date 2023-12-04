@@ -1,13 +1,17 @@
 
 
-
+//components
+import Banner from "../banner/Banner";
 
 
 
 const Home =()=>{
 return (
 
-    <div> Hello From Home</div>
+<Banner/>
 )
 }
+
+
+
 export default Home;

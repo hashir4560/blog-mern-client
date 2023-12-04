@@ -17,6 +17,7 @@ import Header from "./components/header/Header";
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   return isAuthenticated ? (
     <>
+      <Header />
       <Outlet />
     </>
   ) : (
@@ -29,7 +30,6 @@ function App() {
   return (
     <DataProvider>
       <BrowserRouter>
-        <Header />
         <div style={{ marginTop: 64 }}>
           <Routes>
             <Route

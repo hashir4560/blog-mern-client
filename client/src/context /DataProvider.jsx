@@ -16,7 +16,7 @@ const DataProvider=({children})=>{
     setAccount
 
    }}>
-    {children}
+    {children   }
     </DataContext.Provider>
 
 

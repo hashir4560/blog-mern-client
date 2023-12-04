@@ -17,7 +17,6 @@ const Image =styled("img")({
     padding:'50px 0 0 '
 
 })
-
 const Wrapper=styled(Box)   `
   padding :25px 35px;
   display:flex;
