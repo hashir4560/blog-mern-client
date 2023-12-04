@@ -53,8 +53,8 @@ font-size:16px;
 
 `
 const loginInitialValues={
-  username:"",
-  password:""
+  username:'',
+  password:''
 }
 
 const signupInitialValues={
@@ -102,19 +102,22 @@ const onValueChange=(e)=>{
 
 }
 
-const loginUser=async()=>{
-  try{
-  let response = await API.userLogin(login)
-  if(response.isSuccces){
-    showError('')
-  }else{
-    showError("Something Went Wrong ! Please Try again Later s")
+const loginUser = async () => {
+  try {
+    let response = await API.userLogin(login);
+    if (response.isSuccess) {
+      showError('');
+
+      sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
+      sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
+    } else {
+      showError("Something Went Wrong ! Please Try again Later s");
+    }
+  } catch (error) {
+    // Handle the error
   }
-}catch(error){
+};
 
-}
-
-}
 
 
   return (
@@ -126,13 +129,14 @@ const loginUser=async()=>{
           <Wrapper>
          <TextField variant='standard' value={login.username} onChange={(e)=>onValueChange(e)} name="username" label="Enter Username"/>
         <TextField variant='standard' value={login.password}onChange={(e)=>onValueChange(e)} name='password' label="Enter Password"/>
-
-        {error && <Error>{error}</Error>}
+        
+        {error&& <Error>{error}</Error>}
+        {/* {error && <Error>{error}</Error>} */}
         <LoginButton variant='contained' onClick={()=>loginUser()}>Login</LoginButton>
         <Text style={{textAlign:"center"}}>OR</Text>
          <SignupButton onClick={()=>toggleSignup()} >Create an Account</SignupButton>
          </Wrapper> 
-         : 
+         :
          <Wrapper>
          <TextField variant='standard'onChange={(e)=> onInputChange(e)}  name='name'  label="Enter Name"/>
         <TextField variant='standard' onChange={(e)=> onInputChange(e)}  name="username" label="Enter Username"/>
@@ -148,5 +152,4 @@ const loginUser=async()=>{
 
   )
 }   
-
-export default Login
+export default Login;
