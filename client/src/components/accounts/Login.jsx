@@ -42,12 +42,12 @@ height:48px;
 border-radius:2px;
 box-shadow: 0 2px 4px 0 rgb(0 0 0/ 20% )
 `
-const Error =styled(Typography)`
-font-size:10px;
-color:#ff61261;
-line-height:0;
-margin-top:10px;
-font-weight:600
+const Error = styled(Typography)`
+    font-size: 10px;
+    color: #ff6161;
+    line-height: 0;
+    margin-top: 10px;
+    font-weight: 600;
 `
 const Text=styled(Typography)`
 color:#878787;
@@ -62,10 +62,10 @@ const loginInitialValues={
 const signupInitialValues={
     name:'',
     username:'',
-    password:''
+    password:'',
 }
 
-const Login = () => {
+const Login = ({isUserAuthenticated}) => {
     const imageUrl ='https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png';
 
     const [account,toggleAccount]=useState('login')
@@ -82,10 +82,10 @@ const Login = () => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
     }
     
-   const onInputChange=(e)=>{
-    setSignup({...signup,[e.target.name]:e.target.value})
-
-   }
+    const onInputChange = (e) => {
+      // Use the correct state variable based on the field's name
+      setSignup({ ...signup, [e.target.name]: e.target.value });
+    };
 
   //Signup User Func
 
@@ -118,6 +118,7 @@ const loginUser = async () => {
       sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
       sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
       setAccount({username:response.data.username,name:response.data.name})
+      isUserAuthenticated(true);
 
       navigate('/');
     } else {
@@ -139,9 +140,9 @@ const loginUser = async () => {
           <Wrapper>
          <TextField variant='standard' value={login.username} onChange={(e)=>onValueChange(e)} name="username" label="Enter Username"/>
         <TextField variant='standard' value={login.password}onChange={(e)=>onValueChange(e)} name='password' label="Enter Password"/>
-        
-        {error&& <Error>{error}</Error>}
-        {/* {error && <Error>{error}</Error>} */}
+    
+        {error && <Error>{error}</Error>}
+    
         <LoginButton variant='contained' onClick={()=>loginUser()}>Login</LoginButton>
         <Text style={{textAlign:"center"}}>OR</Text>
          <SignupButton onClick={()=>toggleSignup()} >Create an Account</SignupButton>
@@ -151,7 +152,7 @@ const loginUser = async () => {
          <TextField variant='standard'onChange={(e)=> onInputChange(e)}  name='name'  label="Enter Name"/>
         <TextField variant='standard' onChange={(e)=> onInputChange(e)}  name="username" label="Enter Username"/>
         <TextField variant='standard'onChange={(e)=>  onInputChange(e)} name='password'  label="Enter Password"/>
-        {error && <Error>{error}</Error>}
+      
         <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
         <Text style={{textAlign:"center"}}>OR</Text>
          <LoginButton variant='contained' onClick={()=>toggleSignup()}  >Already have an Account</LoginButton>
