@@ -1,7 +1,8 @@
 import React,{useState,useContext} from 'react'
 import {Box,TextField,Button,styled,Typography} from "@mui/material";
 import { API } from '../../service/api';
-import { DataContexts } from '../../context /DataProvider';
+import { DataContext } from '../../context /DataProvider';
+import { useNavigate } from 'react-router-dom';
 
 const Component=styled(Box)`
     width:400px;
@@ -72,7 +73,10 @@ const Login = () => {
     const [signup,setSignup]=useState(signupInitialValues)
     const[error,showError]=useState("")
 
-    const {setAccount}= useContext(DataContext);
+   const {setAccount}=useContext(DataContext);
+
+   //navigation to Home 
+   const navigate=useNavigate();
      
     const toggleSignup = () => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
@@ -114,6 +118,8 @@ const loginUser = async () => {
       sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
       sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
       setAccount({username:response.data.username,name:response.data.name})
+
+      navigate('/');
     } else {
       showError("Something Went Wrong ! Please Try again Later s");
     }
