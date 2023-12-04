@@ -8,7 +8,7 @@ export  const DataContext=createContext(null);
 
 
 
-const DataProvider=()=>{
+const DataProvider=({children})=>{
     const [account,setAccount ]=useState({username:"",name:''})
     return(
    <DataContext.Provider  value={{
@@ -16,6 +16,7 @@ const DataProvider=()=>{
     setAccount
 
    }}>
+    {children}
     </DataContext.Provider>
 
 
