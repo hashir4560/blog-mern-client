@@ -11,7 +11,7 @@ const Image = styled(Box)`
     justify-content: center;
 `;
 
-const Heading = styled(Typography)`
+const Heading = styled(Typography)` 
     font-size: 70px;
     color: #FFFFFF;
     line-height: 1
