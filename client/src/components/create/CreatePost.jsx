@@ -68,7 +68,7 @@ const CreatePost=()=>{
         }
 
         getImage();
-        post.categories=''
+        post.categories='s'
 
 
     },[file])

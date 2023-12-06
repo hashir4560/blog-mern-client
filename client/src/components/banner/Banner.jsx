@@ -27,7 +27,7 @@ const Banner = () => {
     return (
         <Image>
             <Heading>BLOG</Heading>
-            <SubHeading>Code for Interview</SubHeading>
+            <SubHeading>BLOG CREATION MADE SIMPLE</SubHeading>
         </Image>
     )
 }
